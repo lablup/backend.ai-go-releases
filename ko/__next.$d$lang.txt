@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[92337,["/backend.ai-go-releases/_next/static/chunks/a66e09a7c2336f67.js"],"default"]
+3:I[64226,["/backend.ai-go-releases/_next/static/chunks/a66e09a7c2336f67.js"],"default"]
+:HL["/backend.ai-go-releases/_next/static/chunks/03707bc740a613fe.css","style"]
+0:{"buildId":"yVxc2IZMs64kBh_ia8-PP","rsc":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/backend.ai-go-releases/_next/static/chunks/03707bc740a613fe.css","precedence":"next"}]],["$","html",null,{"lang":"ko","suppressHydrationWarning":true,"children":["$","body",null,{"className":"geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__variable antialiased","children":["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]}]}]]}],"loading":null,"isPartial":false}
