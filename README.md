@@ -20,9 +20,9 @@ Run popular models like Gemma 3, Qwen3, Llama, and Mistral entirely on your hard
 Seamlessly combine local models with cloud APIs. Use local models for sensitive data, switch to GPT, Claude, or Gemini for complex tasks — all from the same interface.
 
 Supported providers:
-- OpenAI (GPT-4o, GPT-4)
+- OpenAI (GPT-5.2, GPT Image 1.5, etc.)
 - Anthropic (Claude 4.5 Sonnet, Claude 4.5 Opus)
-- Google (Gemini 1.5 Pro, Gemini 1.5 Flash)
+- Google (Gemini 3 Pro, Gemini 3 Flash)
 - Any OpenAI-compatible endpoint (Ollama, LocalAI, vLLM, etc.)
 
 ### Agent Mode with Tool Calling
