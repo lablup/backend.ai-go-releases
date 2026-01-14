@@ -13,6 +13,7 @@ Run popular models like Gemma 3, Qwen3, Llama, and Mistral entirely on your hard
 - **Apple Silicon (MLX)**: Native acceleration for M1/M2/M3/M4/M5 chips
 - **NVIDIA GPU (CUDA)**: Full GPU acceleration on Windows and Linux
 - **AMD GPU (ROCm)**: Support for AMD graphics cards
+- **Intel GPU (SYCL)**: Acceleration for Intel Arc and Iris graphics
 - **CPU**: Optimized inference for systems without dedicated GPUs
 
 ### Hybrid Cloud Integration
@@ -107,10 +108,14 @@ flatpak install backend-ai-go-x.x.x-linux-x64.flatpak
 
 ## Supported Inference Engines
 
+Backend.AI GO integrates multiple inference engines to provide optimal performance across different hardware and use cases.
+
 | Engine | Format | Platform | Best For |
 |--------|--------|----------|----------|
-| llama.cpp | GGUF | All platforms | Cross-platform compatibility, CPU/GPU inference |
-| MLX | MLX folders | macOS only | Maximum performance on Apple Silicon |
+| [llama.cpp](https://github.com/ggerganov/llama.cpp) | GGUF | All platforms | Cross-platform LLM inference with CPU/GPU support |
+| [mlx-lm](https://github.com/ml-explore/mlx-lm) | MLX | macOS only | Maximum LLM performance on Apple Silicon |
+| [stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp) | GGUF | All platforms | Local image generation |
+| mlxcel | MLX | macOS only | Experimental MLX-based inference engine by Lablup (not yet public) |
 
 ## Auto-Updates
 
