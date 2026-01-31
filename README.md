@@ -12,7 +12,7 @@ Run popular models like Gemma 3, Qwen3, Llama, and Mistral entirely on your hard
 ### Hardware Acceleration
 - **Apple Silicon (MLX)**: Native acceleration for M1/M2/M3/M4/M5 chips
 - **NVIDIA GPU (CUDA)**: Full GPU acceleration on Windows and Linux
-- **AMD GPU (ROCm)**: Support for AMD graphics cards
+- **AMD GPU (HIP/ROCm)**: Support for AMD graphics cards
 - **Intel GPU (SYCL)**: Acceleration for Intel Arc and Iris graphics
 - **CPU**: Optimized inference for systems without dedicated GPUs
 
@@ -123,7 +123,7 @@ The application automatically checks for updates on startup. You can also manual
 
 ## Documentation
 
-For detailed guides and advanced features, visit the [Backend.AI GO Documentation](https://go.backend.ai/docs).
+For detailed guides and advanced features, visit the [Backend.AI GO Documentation](https://go.backend.ai/en/manual/).
 
 ## License
 
