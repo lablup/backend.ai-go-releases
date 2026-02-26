@@ -68,6 +68,13 @@ Download the latest version for your platform from the [Releases](../../releases
 | Linux (Debian/Ubuntu) | `backend-ai-go-x.x.x-linux-x64.deb` |
 | Linux (Other distros) | `backend-ai-go-x.x.x-linux-x64.flatpak` |
 
+### macOS (Homebrew)
+
+```bash
+brew tap lablup/tap
+brew install --cask backend-ai-go
+```
+
 ### macOS
 1. Download the `.dmg` file
 2. Open and drag Backend.AI GO to your Applications folder
