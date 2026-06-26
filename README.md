@@ -87,11 +87,21 @@ Download the latest version for your platform from the [Releases](../../releases
 
 > Linux builds are available for both `x64` and `arm64`. For a desktop-free server, use the `aigo-server-x.x.x-linux-{x64,arm64}.deb` headless package.
 
-### macOS (Homebrew)
+### Homebrew (macOS and Linux)
+
+The Lablup tap provides the desktop app, the `aigo` command-line client, and the headless `aigo-server`:
 
 ```bash
 brew tap lablup/tap
+
+# Desktop app (macOS only)
 brew install --cask backend-ai-go
+
+# CLI client (the aigo command), macOS and Linux
+brew install aigo-cli
+
+# Headless server (aigo-server), macOS and Linux
+brew install aigo-server
 ```
 
 ### macOS
