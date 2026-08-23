@@ -216,7 +216,7 @@ Engine packages are installed separately from the application, so the exact vari
 | [stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp) | Safetensors, CKPT, GGUF  | Supported desktop platforms                        | Local image generation                                                                                |
 | [whisper.cpp](https://github.com/ggml-org/whisper.cpp)                 | GGUF, BIN                | Supported desktop platforms                        | Local speech-to-text transcription                                                                    |
 
-`mlxcel` is a public Apache-2.0 project, not a private or experimental placeholder. It provides a native Rust CLI and OpenAI-compatible server for a broad set of MLX text and vision-language models, with continuous batching, automatic prefix caching, speculative/MTP decoding, KV-cache controls, model surgery, and selected multi-device and distributed modes. Its primary target is Apple Silicon, with Linux/NVIDIA CUDA as a supported secondary target and an experimental OpenXLA backend under active development.
+`mlxcel` provides a native Rust CLI and an OpenAI-compatible server for MLX text and vision-language models. Its serving stack includes continuous batching, automatic prefix caching, speculative and MTP decoding, KV-cache controls, model surgery, and multi-device or distributed execution for supported configurations. It is optimized for Apple Silicon, also supports NVIDIA CUDA on Linux, and includes an experimental OpenXLA backend under active development.
 
 ## Updates
 
@@ -235,4 +235,8 @@ Backend.AI GO supports stable, beta, and canary update channels. By default it c
 
 ## License
 
-Backend.AI GO and [mlxcel](https://github.com/lablup/mlxcel) are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). Backend.AI GO is developed and maintained by [Lablup Inc.](https://www.lablup.com) as part of the [Backend.AI project](https://www.backend.ai/).
+Backend.AI GO release builds are distributed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). They may be downloaded, used, modified, and redistributed in accordance with the license. This repository provides prebuilt packages; the Backend.AI GO source code is not published.
+
+The source code for [mlxcel](https://github.com/lablup/mlxcel) is publicly available under the Apache License 2.0. Third-party components remain subject to their respective license terms and notices.
+
+Backend.AI GO is developed and maintained by [Lablup Inc.](https://www.lablup.com) as part of the [Backend.AI project](https://www.backend.ai/).
