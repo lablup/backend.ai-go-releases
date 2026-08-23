@@ -1,175 +1,238 @@
 # Backend.AI GO
 
-**An agentic workflow platform with cross-platform local LLM serving: private, fast, and fully under your control.**
+**An agentic workflow platform with cross-platform local AI serving: private, fast, and under your control.**
 
-Backend.AI GO is a cross-platform desktop application for building and running agentic AI workflows on your own machine. Run Large Language Models (LLMs), generate images, transcribe audio, and orchestrate multi-agent squads locally. Download models from Hugging Face, chat with AI privately, connect to cloud providers, or scale to other Backend.AI GO instances and enterprise clusters when you need more power.
+Backend.AI GO is a desktop application and headless server for running AI models, building agentic workflows, and connecting local, remote, and cloud inference in one interface. It can run text and vision-language models, generate images, transcribe audio, ground conversations in a local document library, coordinate multi-agent squads, and expose OpenAI-compatible and management APIs.
+
+This public repository distributes Backend.AI GO installers, command-line and headless-server packages, checksums, SBOMs, and updater metadata.
 
 ## Key Features
 
-### Local AI Inference
-Run popular models like Gemma 3, Qwen3, Llama, and Mistral entirely on your hardware. Your conversations stay on your machine, so no data leaves your computer.
+### Local and Containerized Inference
 
-### Hardware Acceleration
-- **Apple Silicon (MLX)**: Native acceleration for M1/M2/M3/M4/M5 chips
-- **NVIDIA GPU (CUDA)**: Full GPU acceleration on Windows and Linux
-- **AMD GPU (HIP/ROCm)**: Support for AMD graphics cards
-- **Intel GPU (SYCL)**: Acceleration for Intel Arc and Iris graphics
-- **CPU**: Optimized inference for systems without dedicated GPUs
+- Search, download, and manage GGUF and MLX models from Hugging Face.
+- Run hardware-specific engines for Apple Metal, NVIDIA CUDA, AMD ROCm/HIP, Intel SYCL/Vulkan, or CPU-only systems.
+- Install and update engine and runtime packages from the in-app **Engines** page.
+- Run managed vLLM and SGLang container engines for high-throughput safetensors serving on supported NVIDIA hosts.
+- Use speculative decoding, including draft-model and embedded-MTP paths when the selected model and engine support them.
 
-### Hybrid Cloud Integration
-Seamlessly combine local models with cloud APIs. Use local models for sensitive data, switch to GPT, Claude, or Gemini for complex tasks, all from the same interface. Provider capability detection probes each model so the app only sends features (tool calls, context length) the model actually supports.
+Local inference requests stay on the machine or nodes you select. Cloud providers, web search, external connectors, and remote MCP servers send data to their configured services when you enable and use them.
 
-Supported providers:
-- OpenAI (GPT-5.2, GPT Image 1.5, via API key or ChatGPT sign-in)
-- Anthropic (Claude Opus 4.8, Claude Sonnet 4.6)
-- Google (Gemini 3 Pro, Gemini 3 Flash)
-- Any OpenAI-compatible endpoint (Ollama, LocalAI, vLLM, etc.)
+### Local, Remote, and Cloud Models
 
-### AI Agents and Multi-Agent Squads
-Turn your AI from a simple chatbot into an autonomous assistant, then put several of them to work together:
-- **Agent Mode**: Multi-step reasoning with tool calling, including web search, file operations, code execution, and image generation
-- **Agent Squad**: Coordinate multiple specialized agents around a shared workspace, task board, and planner
-- **Discussion Rooms**: Have several agents take turns in a moderated room under a turn budget, with moderated, brainstorm, round-robin, and autonomous strategies, then synthesize a conclusion and hand off execution
-- **Cowork Mode**: Delegate to sub-agents with `@mention` dispatch and live activity tracking
-- **Governance and Safety**: Per-agent, per-day, and per-tool spending and rate limits, policy evaluation, audit logging, and an approval workflow for sensitive actions
+Backend.AI GO provides one model picker and routing layer for:
 
-### Creative and Document Tools
-- **Image Generation (Draw)**: Generate images with Stable Diffusion in a conversation-style interface, with a Creations gallery for editing and variations
-- **Audio Transcription**: Convert speech to text locally with Whisper
-- **Document Translation**: Translate PDF, DOCX, Markdown, and TXT files with glossary management
+- OpenAI, including API-key access and ChatGPT Codex OAuth
+- Anthropic
+- Google Gemini
+- Azure OpenAI
+- OpenAI-compatible endpoints
+- Remote vLLM, Ollama, LM Studio, llama.cpp, mlxcel, and Continuum Router endpoints
 
-### Automation, Memory, and Sessions
-- **Automations**: Schedule recurring tasks with a cron engine, templated inputs, and output actions
-- **Memory System**: Namespace-based memory that auto-extracts facts from conversations and persists them across sessions
-- **Sessions**: Run and route multiple inference sessions at once, each with its own model pool and lifecycle
+Provider catalogs and capabilities are probed through the router. If more than one provider serves the same model ID, Backend.AI GO keeps each provider selectable and routes the request to the chosen backend.
 
-### Extensibility: MCP, Plugins, and Connectors
-- **MCP (Model Context Protocol)**: Connect to any MCP-compatible server to access databases, APIs, and custom tools through a standardized protocol
-- **Plugin System**: Extend the UI and behavior with plugins built on the Plugin SDK, with UI slot injection and scoped storage
-- **External Connectors**: Wire in Email (SMTP/IMAP) and Calendar (Google Calendar) with an audit log, one-click undo, and OS credential vault
+### Agents, Cowork, and Squads
 
-### Claude Code Integration
-Use Backend.AI GO as a local endpoint for Claude Code. Rewrite `claude-{haiku,sonnet,opus}-*` requests to local or cloud models with model aliases, inject live web search results (Serper, Brave, or Exa), and verify the connection with a built-in probe.
+- **Agent execution**: Multi-step tool use with web, file, code, data, image, and app-control tools.
+- **Cowork execution mode**: Persistent multi-turn workspaces, sub-agent delegation, inline `@agent` dispatch, live steps, and approval handling.
+- **Agent Squad**: Specialized agents working through a shared workspace, planner, task board, execution reports, and activity dashboard.
+- **Discussion Rooms**: Moderated, brainstorm, round-robin, and autonomous multi-agent discussions with turn budgets and conclusion synthesis.
+- **Governance**: Tool approvals, guardrails, spending and rate limits, policy evaluation, notifications, and durable audit records.
+- **ACP and Extensions**: Agent Communication Protocol profiles plus imports for `SKILL.md` skills, Claude Code sub-agents, and Codex `AGENTS.md` definitions.
 
-### OpenAI-Compatible API and Headless Server
-Use Backend.AI GO as a local API backend for your favorite AI tools. Any application that supports the OpenAI API can connect to your locally running models. A headless server mode adds a REST API, server-sent events, and the `aigo` command-line tool, so you can run Backend.AI GO on a machine without a desktop.
+### Data, Memory, and Creative Workflows
 
-### Multi-Node Mesh Networking
-Scale beyond your local hardware by connecting to other Backend.AI GO instances or Backend.AI clusters. Visualize your network topology in real-time with the interactive Mesh view, and register nodes through mDNS auto-discovery, QR codes, or `aigo://` deep links.
+- **Data Hub**: Ingest files, folders, and URLs into a local library; search with lexical or hybrid retrieval; and ground chat responses with citations.
+- **Data Wiki**: Generate and maintain a wiki from library content with scheduled sweeps and diagnostic checks.
+- **Memory**: Namespace-based conversation memory with extraction, deduplication, browsing, and maintenance tools.
+- **Draw and Creations**: Generate images locally through stable-diffusion.cpp or through configured cloud providers, then manage outputs in a gallery.
+- **Audio transcription**: Transcribe speech locally through whisper.cpp.
+- **Document translation**: Translate text, OCR-extracted images, TXT, Markdown, DOCX, and PDF content with glossary support.
+- **Automations**: Schedule recurring tasks with cron expressions, templates, input sources, tool permissions, and output actions.
+
+### Extensibility and Connectivity
+
+- **MCP**: Connect stdio, Streamable HTTP, and legacy HTTP+SSE MCP servers; expose Backend.AI GO's own MCP endpoint; and render MCP Apps tool results.
+- **Plugins**: Extend the application through a plugin SDK, UI slots, scoped storage, and agent-tool permissions.
+- **External connectors**: Use Email (SMTP/IMAP) and Google Calendar with OS-backed credential storage, audit logs, and undo support.
+- **Claude Code integration**: Route Anthropic-compatible requests through model aliases and optionally augment web search through Serper, Brave, or Exa.
+
+### APIs, Headless Operation, and Multi-Node Serving
+
+- Serve OpenAI-compatible chat, completion, model, and image endpoints.
+- Use the Management REST API, server-sent events, and the `aigo` CLI from desktop or headless deployments.
+- Connect Backend.AI GO instances and Backend.AI clusters through mDNS discovery, QR registration, or `aigo://` deep links.
+- Route registered-node models into chat and use distributed pipeline serving on compatible node groups.
+- Apply managed endpoints, signed policy, feature gates, internal mirrors, and air-gapped deployment profiles in enterprise environments.
 
 ## System Requirements
 
-| Component | Minimum | Recommended |
-|-----------|---------|-------------|
-| RAM | 8 GB | 16 GB or more |
-| Storage | 10 GB free | 50 GB+ (for multiple models) |
-| GPU (Optional) | 4 GB VRAM | 8 GB+ VRAM |
+Resource needs depend primarily on the model and context size. A model must fit in available RAM, unified memory, or VRAM together with its runtime and KV cache.
+
+| Component      | Minimum    | Recommended                       |
+| -------------- | ---------- | --------------------------------- |
+| RAM            | 8 GB       | 16 GB or more                     |
+| Storage        | 10 GB free | 50 GB or more for multiple models |
+| GPU (optional) | 4 GB VRAM  | 8 GB or more VRAM                 |
 
 ### Platform Support
 
-| Platform | Architecture | Notes |
-|----------|--------------|-------|
-| macOS | Apple Silicon (arm64) | M1/M2/M3/M4/M5 chips. Intel not supported. |
-| Windows | x64 | Windows 10/11. NVIDIA GPU recommended. |
-| Linux | x64, arm64 | Debian/Ubuntu (.deb), AppImage, or Flatpak |
+| Platform | Architecture          | Requirements and packages                                                                                                                                                                                                    |
+| -------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| macOS    | Apple Silicon (arm64) | macOS 15 Sequoia or later; Intel Macs are not supported. DMG desktop installer plus CLI and headless-server archives.                                                                                                        |
+| Windows  | x64                   | Windows 10 or 11. Signed NSIS desktop installer and standalone CLI; no Windows headless-server package.                                                                                                                      |
+| Linux    | x64, arm64            | Desktop `.deb`, AppImage, and Flatpak bundles plus CLI and headless-server packages. The one-line CLI/server installer requires glibc 2.39 or later (Ubuntu 24.04+); use the container image on older glibc or musl systems. |
 
 ## Installation
 
-Download the latest version for your platform from the [Releases](../../releases) page.
+Download the [latest stable release](https://github.com/lablup/backend.ai-go-releases/releases/latest), or browse [all releases and prereleases](https://github.com/lablup/backend.ai-go-releases/releases).
 
-| Platform | Package |
-|----------|---------|
-| macOS (Apple Silicon) | `backend-ai-go-x.x.x-macos-arm64.dmg` |
-| Windows | `backend-ai-go-x.x.x-windows-x64-setup.exe` |
-| Linux (Debian/Ubuntu) | `backend-ai-go-x.x.x-linux-x64.deb` |
-| Linux (portable) | `backend-ai-go-x.x.x-linux-x64.AppImage` |
-| Linux (other distros) | `backend-ai-go-x.x.x-linux-x64.flatpak` |
+Each release publishes `SHA256SUMS.txt` for integrity verification and a compressed CycloneDX SBOM. The main desktop assets are:
 
-> Linux builds are available for both `x64` and `arm64`. For a desktop-free server, use the `aigo-server-x.x.x-linux-{x64,arm64}.deb` headless package.
+| Platform        | Release asset                                                                          |
+| --------------- | -------------------------------------------------------------------------------------- |
+| macOS desktop   | `backend-ai-go-<version>-macos-arm64.dmg`                                              |
+| Windows desktop | `backend-ai-go-<version>-windows-x64-setup.exe`                                        |
+| Linux desktop   | `backend-ai-go-<version>-linux-{x64,arm64}.deb`                                        |
+| Linux portable  | `backend-ai-go-<version>-linux-{x64,arm64}.AppImage`                                   |
+| Linux Flatpak   | `backend-ai-go-<version>-linux-{x64,arm64}.flatpak`                                    |
+| CLI             | `aigo-cli-{macos,linux,windows}-<architecture>.*`                                      |
+| Headless server | `aigo-server-<version>-linux-{x64,arm64}.deb` or platform archives for macOS and Linux |
 
-### Homebrew (macOS and Linux)
+### One-Line Install for the CLI and Headless Server
 
-The Lablup tap provides the desktop app, the `aigo` command-line client, and the headless `aigo-server`:
+On macOS or Linux:
+
+```bash
+curl -fsSL https://go.backend.ai/install.sh | sh
+```
+
+On Windows PowerShell:
+
+```powershell
+irm https://go.backend.ai/install.ps1 | iex
+```
+
+The macOS/Linux installer installs `aigo` and `aigo-server` into `~/.aigo/bin` and adds that directory to `PATH`. The Windows installer installs `aigo` only. Every downloaded archive is checked against the release's `SHA256SUMS.txt`, and the verification cannot be skipped.
+
+Common macOS/Linux options:
+
+```bash
+# CLI only, without a confirmation prompt
+curl -fsSL https://go.backend.ai/install.sh | sh -s -- --cli-only -y
+
+# Latest prerelease
+curl -fsSL https://go.backend.ai/install.sh | sh -s -- --channel beta
+
+# System-wide Linux install with a systemd service
+curl -fsSL https://go.backend.ai/install.sh | sudo sh -s -- --system
+```
+
+The installer also supports exact-version pins, custom prefixes, dry runs, mirrors, and uninstall. See the [installation guide](https://go.backend.ai/en/manual/getting-started/installation/) for the complete option and platform matrix.
+
+### Homebrew
+
+The Lablup tap provides the macOS desktop app and the CLI/server formulas for macOS and Linux:
 
 ```bash
 brew tap lablup/tap
 
-# Desktop app (macOS only)
+# Desktop app (macOS 15+ on Apple Silicon)
 brew install --cask backend-ai-go
 
-# CLI client (the aigo command), macOS and Linux
+# CLI client
 brew install aigo-cli
 
-# Headless server (aigo-server), macOS and Linux
+# Headless server
 brew install aigo-server
 ```
 
-### macOS
-1. Download the `.dmg` file
-2. Open and drag Backend.AI GO to your Applications folder
-3. On first launch, you may need to allow the app in **System Settings > Privacy & Security**
+### Manual Desktop Installation
 
-### Windows
-1. Download and run the `.exe` installer
-2. Follow the installation wizard
-3. For best performance, ensure NVIDIA drivers are up to date
+#### macOS
 
-### Linux
+1. Download the arm64 `.dmg`.
+2. Open it and drag **Backend.AI GO** to **Applications**.
+3. Launch the application and complete the first-time setup wizard.
+
+#### Windows
+
+1. Download and run the x64 `-setup.exe` installer.
+2. Follow the installation wizard.
+3. Keep GPU drivers current if you use hardware acceleration.
+
+#### Linux
+
+Replace `<version>` and `x64` with the release and architecture you downloaded.
+
 ```bash
-# Debian/Ubuntu
-sudo dpkg -i backend-ai-go-x.x.x-linux-x64.deb
-sudo apt-get install -f
+# Debian/Ubuntu package (installs dependencies through apt)
+sudo apt install ./backend-ai-go-<version>-linux-x64.deb
 
-# AppImage (portable, no install)
-chmod +x backend-ai-go-x.x.x-linux-x64.AppImage
-./backend-ai-go-x.x.x-linux-x64.AppImage
+# AppImage (portable)
+chmod +x backend-ai-go-<version>-linux-x64.AppImage
+./backend-ai-go-<version>-linux-x64.AppImage
 
-# Flatpak
-flatpak install backend-ai-go-x.x.x-linux-x64.flatpak
+# Flatpak bundle
+flatpak install --user ./backend-ai-go-<version>-linux-x64.flatpak
+flatpak run ai.backend.go
 ```
 
 ## Quick Start
 
-### 1. Download a Model
-- Click the **Search** icon in the sidebar
-- Search for a model (e.g., `Gemma3-4B`, `Qwen3-4B`)
-- Look for **GGUF** format (cross-platform) or **MLX** (macOS only)
-- Click **Download** on your chosen variant (Q4_K_M recommended for balance of speed and quality)
+### 1. Complete First-Time Setup
 
-### 2. Load the Model
-- Go to the **Models** tab
-- Find your downloaded model
-- Click **Load** and wait for the status to show "Ready"
+On first launch, choose the interface language, review the detected accelerator, select a models directory, and optionally configure a first local model and cloud providers. All of these choices can be changed later.
 
-### 3. Start Chatting
-- Click the **Chat** icon in the sidebar
-- Type your message and press Enter
-- Your AI responds entirely locally, no internet required
+### 2. Download a Model
+
+- Open **Models > Browse**.
+- Choose a model that fits your available memory.
+- Use GGUF for the broadest engine and platform compatibility, or MLX on a supported mlxcel/MLX setup.
+- For GGUF models, `Q4_K_M` is usually a practical starting point for the size/quality tradeoff.
+
+### 3. Load the Model
+
+- Open **Models > Local**.
+- Select the downloaded model and click **Load**.
+- If prompted, install the engine variant recommended for the detected hardware.
+- Wait until the model reports that it is ready.
+
+### 4. Start a Conversation
+
+Open **Home** or **Chat**, choose the loaded model, and send a message. After the model and engine are installed, ordinary local inference does not require an internet connection unless the workflow uses an online tool, provider, connector, or remote node.
 
 ## Supported Inference Engines
 
-Backend.AI GO integrates multiple inference engines to provide optimal performance across different hardware and use cases.
+Engine packages are installed separately from the application, so the exact variants offered depend on the platform and detected hardware.
 
-| Engine | Format | Platform | Best For |
-|--------|--------|----------|----------|
-| [llama.cpp](https://github.com/ggml-org/llama.cpp) | GGUF | All platforms | Cross-platform LLM inference with CPU/GPU support |
-| [mlx-lm](https://github.com/ml-explore/mlx-lm) | MLX | macOS only | Maximum LLM performance on Apple Silicon |
-| [stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp) | GGUF | All platforms | Local image generation |
-| [whisper.cpp](https://github.com/ggml-org/whisper.cpp) | GGUF | All platforms | Local audio transcription |
-| mlxcel | MLX | macOS only | MLX-based inference engine by Lablup, optimized for Apple Silicon (not yet public) |
+| Engine                                                                 | Model format             | Platform                                           | Role                                                                                                  |
+| ---------------------------------------------------------------------- | ------------------------ | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| [llama.cpp](https://github.com/ggml-org/llama.cpp)                     | GGUF                     | Supported desktop platforms                        | General text and vision-language inference with CPU, Metal, CUDA, ROCm/HIP, SYCL, and Vulkan variants |
+| [MLX LM](https://github.com/ml-explore/mlx-lm)                         | MLX, GGUF                | macOS arm64                                        | Legacy Apple MLX compatibility path                                                                   |
+| [mlxcel](https://github.com/lablup/mlxcel)                             | MLX                      | macOS arm64 (Metal), Linux x64/arm64 (NVIDIA CUDA) | Preferred native MLX serving engine for LLMs and VLMs                                                 |
+| [vLLM](https://github.com/vllm-project/vllm)                           | Safetensors repositories | Managed containers on supported NVIDIA hosts       | High-throughput serving                                                                               |
+| [SGLang](https://github.com/sgl-project/sglang)                        | Safetensors repositories | Managed containers on supported NVIDIA hosts       | Prefix caching and structured-output serving                                                          |
+| [stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp) | Safetensors, CKPT, GGUF  | Supported desktop platforms                        | Local image generation                                                                                |
+| [whisper.cpp](https://github.com/ggml-org/whisper.cpp)                 | GGUF, BIN                | Supported desktop platforms                        | Local speech-to-text transcription                                                                    |
 
-## Auto-Updates
+`mlxcel` is a public Apache-2.0 project, not a private or experimental placeholder. It provides a native Rust CLI and OpenAI-compatible server for a broad set of MLX text and vision-language models, with continuous batching, automatic prefix caching, speculative/MTP decoding, KV-cache controls, model surgery, and selected multi-device and distributed modes. Its primary target is Apple Silicon, with Linux/NVIDIA CUDA as a supported secondary target and an experimental OpenXLA backend under active development.
 
-The application automatically checks for updates on startup. You can also manually check via **Settings > Check for Updates**. On Linux, the AppImage build updates in place, while deb and Flatpak installs are shown a package-manager upgrade command.
+## Updates
+
+Backend.AI GO supports stable, beta, and canary update channels. By default it checks on startup and can download an available standalone-app update in the background, then shows an update-ready badge before restart and installation. Package-managed installations are given the appropriate upgrade command instead of being overwritten by the in-app updater. You can change update behavior or run a manual check from Settings or the Help menu.
 
 ## Documentation
 
-For detailed guides and advanced features, visit the [Backend.AI GO Documentation](https://go.backend.ai/en/manual/).
-
-## License
-
-Backend.AI GO is developed and maintained by [Lablup Inc.](https://www.lablup.com) as part of the [Backend.AI project](https://www.backend.ai).
+- [English manual](https://go.backend.ai/en/manual/)
+- [Korean manual](https://go.backend.ai/ko/manual/)
+- [Official website](https://go.backend.ai/)
 
 ## Support
 
-We are preparing a discussion channel for bug reports and feature requests. Stay tuned for updates.
+- Report bugs and request features in [GitHub Issues](https://github.com/lablup/backend.ai-go-releases/issues).
+- Ask questions and meet the community on [Backend.AI Discord](https://discord.gg/backend-ai).
+
+## License
+
+Backend.AI GO and [mlxcel](https://github.com/lablup/mlxcel) are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). Backend.AI GO is developed and maintained by [Lablup Inc.](https://www.lablup.com) as part of the [Backend.AI project](https://www.backend.ai/).
